@@ -3,16 +3,19 @@ import 'dotenv/config';
 
 const PORT = process.env.PORT;
 const server = http.createServer((req, res) => {
-  if (!req.headers.authorization) {
-    res.statusCode = 401;
+  if (req.method === 'PUT') {
+    res.statusCode = 200;
     res.setHeader('Content-Type', 'text/plain');
-    res.end('Unauthorized');
+    res.end('PUT-запрос обработан');
     return;
   }
 
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/plain');
-  res.end('Authorization header received');
+  if (req.method === 'DELETE') {
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'text/plain');
+    res.end('DELETE-запрос обработан');
+    return;
+  }
 });
 
 server.listen(PORT, () => {
