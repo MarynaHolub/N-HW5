@@ -8,8 +8,8 @@ const server = http.createServer((req, res) => {
     throw new Error('Error');
   } catch (error) {
     res.statusCode = 500;
-    res.setHeader('Content-Type', 'text/plain');
-    fs.appendFile('errors.log', 'Internal Server Error', (err) => {
+    res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+    fs.appendFile('errors.log', `${new Date().toLocaleString()} - method: ${req.method} - url: ${req.url} - ${error.message}\n`, (err) => {
       if (err) {
         console.error('Ошибка записи в файл:', err);
       }
@@ -20,5 +20,5 @@ const server = http.createServer((req, res) => {
 });
 
 server.listen(PORT, () => {
-  console.log(`Server connecting at http://localhost:${PORT}`);
+  console.log(`Server running at http://localhost:${PORT}`);
 });

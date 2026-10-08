@@ -3,21 +3,26 @@ import 'dotenv/config';
 
 const PORT = process.env.PORT;
 const server = http.createServer((req, res) => {
+  res.statusCode = 200;
+  res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+
+  if (req.method === 'GET') {
+    if (req.url === '/') {
+      res.end('GET-запрос обработан');
+      return;
+    }
+  }
   if (req.method === 'PUT') {
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'text/plain');
     res.end('PUT-запрос обработан');
     return;
   }
 
   if (req.method === 'DELETE') {
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'text/plain');
     res.end('DELETE-запрос обработан');
     return;
   }
 });
 
 server.listen(PORT, () => {
-  console.log(`Server connecting at http://localhost:${PORT}`);
+  console.log(`Server running at http://localhost:${PORT}`);
 });
